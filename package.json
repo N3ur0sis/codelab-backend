@@ -2,23 +2,54 @@
   "name": "codelab-backend",
   "version": "1.0.0",
   "description": "Backend de l'application CodeLab",
-  "main": "index.js",
+  "main": "dist/index.cjs",
   "scripts": {
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,json,md}'",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "jest",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^6.0.0",
+    "@prisma/client": "^6.0.1",
     "express": "^4.21.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.2.10",
     "nodemon": "^3.1.7",
+    "prettier": "^3.4.1",
     "prisma": "^6.0.0",
+    "ts-jest": "^29.2.5",
     "typescript": "^5.7.2"
+  },
+  "type": "module",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "npm run test -- --bail --findRelatedTests"
+    ],
+    "*.{js,json,md}": [
+      "prettier --write"
+    ]
   }
 }
