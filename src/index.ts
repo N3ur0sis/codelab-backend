@@ -1,19 +1,10 @@
-import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import userRoutes from './routes/userRoutes.js';
+import app from './app.js';
 
-const app = express();
-const prisma = new PrismaClient();
 const PORT = process.env.PORT || 4000;
 
-app.use(express.json());
-
-app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'UP' });
-});
-
+/**
+ * Starts the Express server.
+ */
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
-
-app.use('/api/users', userRoutes);
